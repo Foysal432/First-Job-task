@@ -11,6 +11,7 @@ import Login from './Page/Login/Login.jsx';
 import Home from './Page/Home.jsx';
 import Register from './Page/Register/Register.jsx';
 import Provider from './Confiq/Provider.jsx';
+import DashBoard from './Page/DashBoard/DashBoard.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     {
       path:'register',
       element:<Register></Register>
+    },
+    {
+      path:'board',
+      element:<DashBoard></DashBoard>
     }
   ]
   },

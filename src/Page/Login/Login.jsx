@@ -1,7 +1,41 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GrFormPreviousLink } from "react-icons/gr";
+import useAuth from "../../Hook/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+    const navigate =useNavigate()
+  const {user,login,Googlesingin} = useAuth()
+  console.log(user);
+   
+  const handlelogin =(e)=>{
+    e.preventDefault()
+    const email =e.target.email.value;
+     const password =e.target.password.value;
+     console.log(email,password)
+     login(email,password)
+     .then(result=>{
+      console.log(result.user);
+      toast.success('login success')
+      navigate('/')
+     })
+     .catch(error=>{
+      toast.error(error.message)
+     })
+  }
+
+
+ const handleGooglelogin =()=>{
+  Googlesingin()
+  .then(result=>{
+      console.log(result.user);
+      toast.success('Google login success')
+      navigate('/')
+  })
+  .catch (error =>{
+    toast.error(error.message)
+  })
+ }
     return(
         <div>
             <div className="text-center bg-[#F5F1EE] py-5">
@@ -18,7 +52,7 @@ const Login = () => {
                 <div className=" w-4/5 mx-auto">
                     <div className="">
                         <div className="shadow-2xl ">
-                            <form  className="card-body">
+                            <form  onSubmit={handlelogin} className="card-body">
                                 <div className="form-control">
                                     <p className="text-2xl font-bold">Login</p>
                                     <label className="label">
@@ -42,10 +76,10 @@ const Login = () => {
                         <div className="text-center py-5 pt-0">
                         <p className="text-center my-4">Or Log in with</p>
                             <div>
-                                <button  className="btn w-full bg-yellow-400">Google</button>
+                                <button onClick={handleGooglelogin}  className="btn w-full bg-yellow-400">Google</button>
                             </div>
                         </div>
-                        <p className="p-4">Don't have an account yet? <Link className="text-yellow-400" to={'/register'}>Register</Link> for free</p>
+                        <p className="p-4">Don not have an account yet? <Link className="text-yellow-400" to={'/register'}>Register</Link> for free</p>
                         </div>
                     </div>
                 </div>

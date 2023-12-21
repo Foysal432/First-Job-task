@@ -12,6 +12,7 @@ import Home from './Page/Home.jsx';
 import Register from './Page/Register/Register.jsx';
 import Provider from './Confiq/Provider.jsx';
 import DashBoard from './Page/DashBoard/DashBoard.jsx';
+import AddTask from './Page/DashBoard/AddTask.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,8 +31,10 @@ const router = createBrowserRouter([
     },
     {
       path:'board',
-      element:<DashBoard></DashBoard>
-    }
+      element:<DashBoard></DashBoard>,
+      
+    },
+   
   ]
   },
 ]);

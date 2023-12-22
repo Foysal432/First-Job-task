@@ -7,9 +7,52 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useAxios from "../../Hook/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const DashBoard = () => {
    const { user, logout } = useAuth()
+   const axiosPublic = useAxios()
+   const { refetch, data: users = [] } = useQuery({
+     queryKey: ['users'],
+     queryFn: async () => {
+       const res = await axiosPublic.get(`/addtask/${user?.email}`)
+       return res.data
+     }
+   })
+   // delete
+
+   const handleDelete = id => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Swal.fire({
+          //   title: "Deleted!",
+          //   text: "Your file has been deleted.",
+          //   icon: "success"
+          // });
+          axiosPublic.delete(`/addtask/${id}`)
+            .then(res => {
+              refetch()
+              if (res.data.deletedCount > 0) {
+                toast.success(' deleted Successfully done !')
+              }
+            })
+        }
+      });
+    }
+
+
+
+   console.log(users);
    const navigate = useNavigate()
    const handlelogout = () => {
       logout()
@@ -133,16 +176,20 @@ const DashBoard = () => {
                <ul className=" p-4 flex lg:flex-row justify-between">
                   <div>
                      <h1 className="text-2xl text-center font-bold">To Do</h1>
-                     <div className="card w-96 bg-base-100">
-                        <div className="card-body">
-                           <div className="flex justify-between">
-                              <h2 className="card-title">Task 1</h2>
-                              <button className="btn btn-circle btn-outline bg-gradient-to-r from-violet-500 to-fuchsia-500">
-                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                              </button>
+                     <div>
+                        {
+                           users?.map(task=><div key={task._id} className="card w-96 bg-base-100 my-4">
+                           <div className="card-body">
+                              <div className="flex justify-between">
+                                 <h2 className="card-title">{task.title}</h2>
+                                 <button onClick={() => handleDelete(task._id)} className="btn btn-circle btn-outline bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                 </button>
+                              </div>
+                              <p>{task.description}</p>
                            </div>
-                           <p>If a dog chews shoes whose shoes does he choose?</p>
-                        </div>
+                        </div>)
+                        }
                      </div>
                   </div>
                   <div>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GrFormPreviousLink } from "react-icons/gr";
 import useAuth from "../../Hook/useAuth";
 import toast from "react-hot-toast";
@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 const Login = () => {
     const navigate =useNavigate()
   const {user,login,Googlesingin} = useAuth()
+  const location =useLocation()
   console.log(user);
    
   const handlelogin =(e)=>{
@@ -17,7 +18,9 @@ const Login = () => {
      .then(result=>{
       console.log(result.user);
       toast.success('login success')
-      navigate('board')
+      const intendedDestination =
+          (location.state && location.state.from) || "/";
+        navigate(intendedDestination);
      })
      .catch(error=>{
       toast.error(error.message)
@@ -30,7 +33,9 @@ const Login = () => {
   .then(result=>{
       console.log(result.user);
       toast.success('Google login success')
-      navigate('/')
+      const intendedDestination =
+          (location.state && location.state.from) || "/";
+        navigate(intendedDestination);
   })
   .catch (error =>{
     toast.error(error.message)

@@ -16,6 +16,8 @@ import AddTask from './Page/DashBoard/AddTask.jsx';
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './Route/PrivateRoute.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Review from './Page/Review/Review.jsx';
+import Contact from './Page/Contact/Contact.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,9 +37,15 @@ const router = createBrowserRouter([
     {
       path:'board',
       element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
-      
     },
-   
+    {
+      path:'review',
+      element:<Review></Review>
+    },
+   {
+    path:'contact',
+    element:<Contact></Contact>
+   }
   ]
   },
 ]);

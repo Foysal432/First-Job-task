@@ -4,7 +4,6 @@ const Navbar = () => {
     const navlink = <>
     <NavLink to={'/'}><li><a>Home</a></li></NavLink>
     <NavLink to={'/board'}><li><a>DashBoard </a></li></NavLink>
-    <NavLink to={'/teachon'} ><li><a>Teach on Edon </a></li></NavLink>
     </>
     return(
         <div>
@@ -20,7 +19,7 @@ const Navbar = () => {
        }
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="btn btn-ghost text-xl">TaskManager</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">

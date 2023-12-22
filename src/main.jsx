@@ -13,6 +13,8 @@ import Register from './Page/Register/Register.jsx';
 import Provider from './Confiq/Provider.jsx';
 import DashBoard from './Page/DashBoard/DashBoard.jsx';
 import AddTask from './Page/DashBoard/AddTask.jsx';
+import { Toaster } from 'react-hot-toast';
+import PrivateRoute from './Route/PrivateRoute.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
     },
     {
       path:'board',
-      element:<DashBoard></DashBoard>,
+      element:<PrivateRoute><DashBoard></DashBoard></PrivateRoute>,
       
     },
    
@@ -44,5 +46,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider>
     <RouterProvider router={router} />
     </Provider>
+    <Toaster></Toaster>
   </React.StrictMode>,
 )

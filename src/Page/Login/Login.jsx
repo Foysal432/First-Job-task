@@ -17,7 +17,7 @@ const Login = () => {
      .then(result=>{
       console.log(result.user);
       toast.success('login success')
-      navigate('/')
+      navigate('board')
      })
      .catch(error=>{
       toast.error(error.message)

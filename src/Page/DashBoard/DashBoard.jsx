@@ -9,16 +9,16 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DashBoard = () => {
-   const { user,logout } = useAuth()
-   const navigate =useNavigate()
-   const handlelogout =()=>{
-     logout()
-     .then(result=>{
-      console.log(result.user);
-      toast.success('Logout  success')
-      navigate('/')
-  })
-     .catch()
+   const { user, logout } = useAuth()
+   const navigate = useNavigate()
+   const handlelogout = () => {
+      logout()
+         .then(result => {
+            console.log(result.user);
+            toast.success('Logout  success')
+            navigate('/')
+         })
+         .catch()
    }
    const [startDate, setStartDate] = useState(new Date());
    const { register, handleSubmit } = useForm({
@@ -34,24 +34,24 @@ const DashBoard = () => {
          description: data.description,
          priority: data.priority,
          date: startDate,
-         email:user?.email
+         email: user?.email
       }
       console.log(request);
       // send data to the server
       fetch('http://localhost:5000/addtask', {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(request)
+         method: 'POST',
+         headers: {
+            'content-type': 'application/json'
+         },
+         body: JSON.stringify(request)
       })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          if (data.insertedId) {
-            toast.success('Success Your Submission')
-          }
-        })
+         .then(res => res.json())
+         .then(data => {
+            console.log(data);
+            if (data.insertedId) {
+               toast.success('Success Your Submission')
+            }
+         })
    }
    return (
       <div className="flex">
@@ -126,15 +126,31 @@ const DashBoard = () => {
                         <button>close</button>
                      </form>
                   </dialog>
-               </div>
-               <ul className="menu p-4 flex flex-row ">
                   <div>
-                     <li> See Previous Task</li>
-                     <p>this is previous task management</p>
+                     <button className="btn text-white bg-gradient-to-r from-violet-500 to-fuchsia-500">Previous Task</button>
                   </div>
-                  <li> <NavLink to={'/dashboard/profile'}> To Do  Task</NavLink></li>
-                  <li> <NavLink to={'/dashboard/profile'}> Ongoing Task</NavLink></li>
-                  <li> <NavLink to={'/dashboard/profile'}> Completed Task</NavLink></li>
+               </div>
+               <ul className=" p-4 flex lg:flex-row justify-between">
+                  <div>
+                     <h1 className="text-2xl text-center font-bold">To Do</h1>
+                     <div className="card w-96 bg-base-100">
+                        <div className="card-body">
+                           <div className="flex justify-between">
+                              <h2 className="card-title">Task 1</h2>
+                              <button className="btn btn-circle btn-outline bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                              </button>
+                           </div>
+                           <p>If a dog chews shoes whose shoes does he choose?</p>
+                        </div>
+                     </div>
+                  </div>
+                  <div>
+                     <h1 className="text-2xl text-center font-bold">OnGoing</h1>
+                  </div>
+                  <div>
+                     <h1 className="text-2xl text-center font-bold">Completed</h1>
+                  </div>
                </ul>
                <div>
                   <Outlet></Outlet>
